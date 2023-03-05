@@ -28,6 +28,7 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
     private var mHourHandSize = 170f
     private var mHandSize = 0
     private var mRect :Rect? = null
+    private var mDots = 0
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -52,7 +53,7 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
         mCentreY = mHeight / 2
         mMinimum = mHeight.coerceAtMost(mWidth)
         mRadius =
-            mMinimum / 2 - mPadding
+            mMinimum / 3 - mPadding
         mAngle =(Math.PI / 30 - Math.PI / 2).toFloat().toDouble()
         mPaint = Paint()
         mPath = Path()
@@ -60,6 +61,7 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
         mHandSize =
             mRadius - mRadius / 4
         mNumbers = intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+        mDots = mNumbers.size*5
         mIsInit = true
     }
 
@@ -73,9 +75,9 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
 
     private fun drawCircle(canvas: Canvas) {
         mPaint?.reset()
-        setPaintAttributes(Color.BLACK, Paint.Style.STROKE, 8)
+        setPaintAttributes(Color.BLACK, Paint.Style.STROKE, 20)
         mPaint?.let {
-            canvas.drawCircle(mCentreX.toFloat(), mCentreY.toFloat(), mRadius.toFloat(),
+            canvas.drawCircle(mCentreX.toFloat(), mCentreY.toFloat(), (mRadius+100).toFloat(),
                 it
             )
         }
@@ -110,7 +112,6 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
                 it,
             )
         };
-        Log.e("Tag", (mCentreY+Math.sin(mAngle)*mHourHandSize).toFloat().toString())
     }
 
     private fun drawHourHand(canvas: Canvas, location: Double) {
@@ -145,10 +146,11 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
         mPaint!!.textSize = if (mMinimum > 150) 16 * resources.displayMetrics.density else 0F
         for (number in mNumbers) {
             val num = number.toString()
-            mPaint!!.getTextBounds(num, 0, num.length, mRect)
+            mPaint?.getTextBounds(num, 0, num.length, mRect)
             val angle = Math.PI / 6 * (number - 3)
-            val x = (mCentreX + cos(angle) * mRadius - mRect!!.width() / 2).toInt()
-            val y = (mCentreY + sin(angle) * mRadius + mRect!!.height() / 2).toInt()
+            val x = (mCentreX + cos(angle) * mRadius - mRect!!.width() / 2)
+
+            val y = (mCentreY + sin(angle) * mRadius + mRect!!.height() / 2)
             canvas.drawText(num, x.toFloat(), y.toFloat(), mPaint!!)
         }
     }
