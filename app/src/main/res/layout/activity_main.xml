@@ -7,11 +7,24 @@
     android:layout_gravity="center"
 
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <com.example.geekstore.view.CustomClock
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFE1E1" />
+
+    <com.example.geekstore.view.CustomClock
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFE1E1" />
+
+    <com.example.geekstore.view.CustomClock
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFE1E1" />
 </LinearLayout>

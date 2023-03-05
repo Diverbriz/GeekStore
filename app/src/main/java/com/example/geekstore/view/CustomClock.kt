@@ -120,7 +120,7 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
         canvas.drawLine(
             mCentreX.toFloat(),
             mCentreY.toFloat(),
-            (mCentreX + Math.cos(mAngle) * mHourHandSize).toFloat(),
+            (mCentreX + Math.cos(mAngle) * mHandSize).toFloat(),
             (mCentreY + Math.sin(mAngle) * mHourHandSize).toFloat(),
             mPaint!!
         )
@@ -142,7 +142,7 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
     }
 
     private fun drawNumerals(canvas: Canvas) {
-        mPaint!!.textSize = 16 * resources.displayMetrics.density
+        mPaint!!.textSize = if (mMinimum > 150) 16 * resources.displayMetrics.density else 0F
         for (number in mNumbers) {
             val num = number.toString()
             mPaint!!.getTextBounds(num, 0, num.length, mRect)
