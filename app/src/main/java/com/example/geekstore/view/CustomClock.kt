@@ -53,7 +53,7 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
         mCentreY = mHeight / 2
         mMinimum = mHeight.coerceAtMost(mWidth)
         mRadius =
-            mMinimum / 3 - mPadding
+            mMinimum / 2 - mPadding
         mAngle =(Math.PI / 30 - Math.PI / 2).toFloat().toDouble()
         mPaint = Paint()
         mPath = Path()
@@ -77,7 +77,7 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
         mPaint?.reset()
         setPaintAttributes(Color.BLACK, Paint.Style.STROKE, 20)
         mPaint?.let {
-            canvas.drawCircle(mCentreX.toFloat(), mCentreY.toFloat(), (mRadius+100).toFloat(),
+            canvas.drawCircle(mCentreX.toFloat(), mCentreY.toFloat(), mRadius.toFloat(),
                 it
             )
         }
@@ -148,9 +148,9 @@ class CustomClock(context: Context?, attrs: AttributeSet?) : View(context, attrs
             val num = number.toString()
             mPaint?.getTextBounds(num, 0, num.length, mRect)
             val angle = Math.PI / 6 * (number - 3)
-            val x = (mCentreX + cos(angle) * mRadius - mRect!!.width() / 2)
+            val x = (mCentreX + cos(angle) * 2/3 * mRadius - mRect!!.width() / 2)
 
-            val y = (mCentreY + sin(angle) * mRadius + mRect!!.height() / 2)
+            val y = (mCentreY + sin(angle) * 2/3 * mRadius + mRect!!.height() / 2)
             canvas.drawText(num, x.toFloat(), y.toFloat(), mPaint!!)
         }
     }
